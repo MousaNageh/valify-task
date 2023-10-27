@@ -23,15 +23,15 @@ Task built by Django, Django Rest framework, PostgreSQL database, nginx and dock
 
 - run the following commnand to build images and run containers
 ```sh
-docker-composer up 
+docker-compose up 
  ```
 - or for docker detached mode run :
 ```sh
-docker-composer up --build  -d
+docker-compose up --build  -d
  ```
 - or for newer vision of docker 
 ```sh
-docker composer up
+docker compose up
 ```
 ### base_url : `http://127.0.0.1:9999`
 ### admin panel url : `http://127.0.0.1:9999/admin`
