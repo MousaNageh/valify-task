@@ -129,7 +129,7 @@ print(response.json())
 
 
 
-#### get new access token py refresh token API
+#### get new access token by refresh token API
 - endpoint `POST` : `{{base_url}}/api/oauth/refresh-token`
 - payload :
 ```json
@@ -190,7 +190,8 @@ response = requests.post("{{base_url}}/api/secret/",
 print(response.json())
 ```
 - notes :
-  - this api requires q authentication using access token as shown in python code  
+  - this api requires authentication using access token as shown in python code
+  - `secret` must be at least 8 digits 
   - you can not share secrets with yourself (the same email of yours has logged in)
   - all emails in `shared_with` must be users
 

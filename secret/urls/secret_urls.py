@@ -5,5 +5,9 @@ from secret.views.shared_secret_views import SharedSecretListAPI, DecryptSharedS
 urlpatterns = [
     path("", SecretAPIView.as_view(), name="secret-api"),
     path("shared", SharedSecretListAPI.as_view(), name="shared-secret-list-api"),
-    path("shared/<int:shared_secret_id>", DecryptSharedSecret.as_view(), name="shared-secret-decrypt-api"),
+    path(
+        "shared/<int:shared_secret_id>",
+        DecryptSharedSecret.as_view(),
+        name="shared-secret-decrypt-api",
+    ),
 ]
