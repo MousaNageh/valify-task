@@ -29,6 +29,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "commands",
     "user",
+    "secret",
 ]
 
 INSTALLED_APPS = [
@@ -162,11 +163,12 @@ JAZZMIN_SETTINGS = {
         "auth.user": "fas fa-user",
         "auth.group": "fas fa-users",
         "User.User": "fas fa-user",
-        "package.Package": "fas fa-building",
-        "package.Subscription": "fas fa-money-check-alt"
+        "secret.Secret": "fas fa-user-secret"
 
     },
 }
 
 
 AUTH_USER_MODEL = "user.User"
+
+APPEND_SLASH = True

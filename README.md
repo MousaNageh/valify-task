@@ -154,3 +154,149 @@ response = requests.post("{{base_url}}/api/oauth/refresh-token",
 )
 print(response.json())
 ```
+
+
+
+
+#### create secret API
+- endpoint `POST` : `{{base_url}}/api/secret/`
+- payload :
+```json
+{
+    "secret": "<secret>",
+    "shared_with": ["<user_1_email>", "<user_2_email>",... ]
+}
+```
+- response sample :
+```json
+{
+    "secret": "secret 1"
+}
+```
+- python code:
+```python
+import requests
+token = "<access_token>"
+headers = {
+    "Authorization": f"Bearer {token}",
+}
+response = requests.post("{{base_url}}/api/secret/",
+        data={
+          "secret": "<secret>",
+          "shared_with": ["<user_1_email>", "<user_2_email>",... ]
+        },
+        headers=headers
+)
+print(response.json())
+```
+- notes :
+  - this api requires q authentication using access token as shown in python code  
+  - you can not share secrets with yourself (the same email of yours has logged in)
+  - all emails in `shared_with` must be users
+
+
+
+
+#### retrieve a list  secrets API
+- endpoint `GET` : `{{base_url}}/api/secret`
+- response sample :
+```json
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "secret": "secret 1",
+            "shared_with": [
+                {
+                    "id": 4,
+                    "user": {
+                        "full_name": "mousa nageh",
+                        "email": "test@test.com"
+                    }
+                },
+                {
+                    "id": 8,
+                    "user": {
+                        "full_name": "Admin",
+                        "email": "admin@admin.com"
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+- python code:
+```python
+import requests
+token = "<access_token>"
+headers = {
+    "Authorization": f"Bearer {token}",
+}
+response = requests.get("{{base_url}}/api/secret", headers=headers)
+print(response.json())
+```
+- notes :
+  - this api requires q authentication using access token as shown in python code  
+  - data is paginated by 10
+
+
+
+#### retrieve a list shared secrets API
+- endpoint `GET` : `{{base_url}}/api/secret/shared`
+- response sample :
+```json
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 4,
+            "secret": "gAAAAABlO3c8HDPXD2fi71rkhENy7K9E9sEI2Odn4-Rl8mVsbJZnxx3wfhQj5T89YVeAKjIDTFhYd7xxY0SYpQzOmtalF47lAg==",
+            "shared_by": {
+                "full_name": "mousa nageh",
+                "email": "test@test.com"
+            }
+        }
+    ]
+}
+```
+- python code:
+```python
+import requests
+token = "<access_token>"
+headers = {
+    "Authorization": f"Bearer {token}",
+}
+response = requests.get("{{base_url}}/api/secret/shared", headers=headers)
+print(response.json())
+```
+- notes :
+  - this api requires q authentication using access token as shown in python code  
+  - data is paginated by 10
+
+
+#### Decrypt shared secret API
+- endpoint `GET` : `{{base_url}}/api/secret/shared/<shared_secret_id>`
+- response sample :
+```json
+{
+    "secret": "secret 1"
+}
+```
+- python code:
+```python
+import requests
+token = "<access_token>"
+headers = {
+    "Authorization": f"Bearer {token}",
+}
+response = requests.get("{{base_url}}/api/secret/shared/<shared_secret_id>", headers=headers)
+print(response.json())
+```
+- notes :
+  - this api requires q authentication using access token as shown in python code
+  - `<shared_secret_id>` replaced with shared secret id retrieved from list of shared secrets. 

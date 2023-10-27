@@ -15,9 +15,9 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (_("Data"), {"fields": ("email", "full_name", "password")}),
         ((_("Permissions")), {"fields": ("is_active", "is_superuser")}),
-        (_("Important dates"), {"fields": ("last_login",)}),
+        (_("Important dates"), {"fields": ("last_login", "created_at")}),
     )
-
+    readonly_fields = ["created_at"]
     add_fieldsets = (
         (None, {"classes": ("wide",), "fields": ("email", "password1", "password2"), },),
     )

@@ -5,6 +5,7 @@ from django.urls import include, path
 
 api_urlpatterns = [
     path("oauth/", include("user.urls.user_urls")),
+    path("secret/", include("secret.urls.secret_urls")),
 ]
 
 urlpatterns = (

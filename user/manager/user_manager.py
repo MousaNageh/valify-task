@@ -17,7 +17,7 @@ class UserManager(BaseUserManager):
         if not extra_fields.get("full_name"):
             raise ValueError(_("The full name must be set"))
 
-        email = self.normalize_email(email)
+        email = self.normalize_email(email).lower()
 
         user = self.model(email=email, **extra_fields)
 
