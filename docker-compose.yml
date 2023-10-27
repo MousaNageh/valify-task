@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+
+  db:
+    container_name: valify_task_db
+    image: postgres:15.2-alpine3.17
+    env_file:
+      - .env
+    volumes:
+      - ./db_backup:/var/lib/postgresql/data
+
+  web_app:
+    container_name: valify_task_app
+    tty: true
+    stdin_open: true
+    build: .
+    volumes:
+      - .:/app
+    command: >
+      sh -c "python /app/manage.py collectstatic --noinput &&
+             python /app/manage.py makemigrations &&
+             python /app/manage.py migrate &&
+             python /app/manage.py init_admin &&
+             gunicorn valify_task.wsgi --threads 4 --timeout 240 --bind 0.0.0.0:8000  --reload --workers 3 --chdir /app/"
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  nginx:
+    container_name: valify_task_nginx
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile.nginx
+    ports:
+      - "9999:80"
+    depends_on:
+      - web_app

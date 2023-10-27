@@ -1,0 +1,7 @@
+repos:
+  - repo: https://github.com/pre-commit/mirrors-flake8
+    rev: v3.9.2
+    hooks:
+      - id: flake8
+        exclude: migrations,settings.py,tests,__init__.py,venv,env
+        args: [--max-line-length=120, --ignore=E402,E501,W503]
