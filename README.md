@@ -48,6 +48,8 @@ docker exec valify_task_app python manage.py test
 - the query  analytics for development only, in production with be not exists automatically (if `DEBUG` is False
 and `HTTPS` is allowed)
 
+### postman collection `Valify.postman_collection.json` in the root directory
+
 ## APIS
 
 
