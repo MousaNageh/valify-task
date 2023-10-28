@@ -3,7 +3,6 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED
-from secret.queryset.secret_queryset import SecretQueryset
 from secret.tests.dataset import valid_secrets_string_dataset, not_exist_emails
 from user.tests.dataset import user_valid_dataset
 
@@ -40,6 +39,14 @@ class CreateSecretAuthorization(TestCase):
                 "secret": valid_secrets_string_dataset[0],
                 "shared_with": ["email1", "email2"],
             },
+            format="json",
+        )
+        self.assertEqual(res.status_code, HTTP_400_BAD_REQUEST)
+
+    def test_create_secret_with_not_valid_secret(self):
+        res = self.client.post(
+            self.url,
+            data={"secret": "1234", "shared_with": not_exist_emails,},
             format="json",
         )
         self.assertEqual(res.status_code, HTTP_400_BAD_REQUEST)

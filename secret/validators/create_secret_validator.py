@@ -1,6 +1,4 @@
 from rest_framework.exceptions import ValidationError
-
-from secret.queryset.shared_secret_queryset import SharedSecretQueryset
 from user.querysets.user_queryset import UserQueryset
 
 

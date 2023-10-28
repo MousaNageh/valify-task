@@ -170,7 +170,7 @@ print(response.json())
 - response sample :
 ```json
 {
-    "secret": "secret 1"
+    "secret": "secret 1234"
 }
 ```
 - python code:
@@ -208,7 +208,7 @@ print(response.json())
     "previous": null,
     "results": [
         {
-            "secret": "secret 1",
+            "secret": "secret 1234",
             "shared_with": [
                 {
                     "id": 4,
@@ -285,7 +285,7 @@ print(response.json())
 - response sample :
 ```json
 {
-    "secret": "secret 1"
+    "secret": "secret 1234"
 }
 ```
 - python code:
