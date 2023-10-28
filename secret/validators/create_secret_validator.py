@@ -16,7 +16,6 @@ class SharedSecretValidator:
             self._validate_user_already_secret_shared_with_them(secret_id)
 
     def _validate_user_can_not_share_secret_with_himself(self):
-        print(self._user.email)
         if self._user.email in self._user_emails:
             raise ValidationError("You cannot share the secret with yourself.")
 
