@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
@@ -6,6 +5,7 @@ from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 from secret.queryset.secret_queryset import SecretQueryset
 from secret.tests.dataset import valid_secrets_string_dataset
 from secret.models import SharedSecret
+from user.querysets.user_queryset import UserQueryset
 from user.tests.dataset import user_valid_dataset
 
 
@@ -14,12 +14,8 @@ class SharedSecretAuthorization(TestCase):
         self.client = APIClient()
         self.get_url = reverse("shared-secret-list-api")
 
-        self.user1 = get_user_model().objects.create(
-            **user_valid_dataset[0], is_active=True
-        )
-        self.user2 = get_user_model().objects.create(
-            **user_valid_dataset[1], is_active=True
-        )
+        self.user1 = UserQueryset.create_user(**user_valid_dataset[0], is_active=True)
+        self.user2 = UserQueryset.create_user(**user_valid_dataset[1], is_active=True)
         self._create_secrets()
 
     def test_user_can_get_shared_secrets_of_anther_user(self):

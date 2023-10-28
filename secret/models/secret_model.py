@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.core.validators import MinLengthValidator
+
 from secret.crypto.secret_crypto import SecretCrypto
 from django.db import models
 
@@ -10,7 +12,7 @@ class Secret(models.Model):
         db_index=True,
         on_delete=models.CASCADE,
     )
-    secret = models.TextField()
+    secret = models.TextField(validators=[MinLengthValidator(8)])
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

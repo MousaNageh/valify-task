@@ -4,6 +4,7 @@ from secret.serializers.shared_secret_serializer import SharedSecretForUserSeria
 
 
 class SecretSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
     secret = serializers.SerializerMethodField()
     shared_with = SharedSecretForUserSerializer(source="shared_secrets", many=True)
 

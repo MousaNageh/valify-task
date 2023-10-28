@@ -11,6 +11,15 @@ class SharedSecretQueryset:
         return query
 
     @staticmethod
+    def get_shared_secret_for_users_by_secret(
+        user_emails: list, secret, emails_only=True
+    ):
+        query = SharedSecret.objects.filter(user__email__in=user_emails, secret=secret)
+        if emails_only:
+            return query.select_related("user").values_list("user__email", flat=True)
+        return query
+
+    @staticmethod
     def create_shared_secrets(secret, user_emails):
         users = UserQueryset.get_users_by_email(user_emails)
         shared_secrets = [SharedSecret(user=user, secret=secret) for user in users]

@@ -14,3 +14,6 @@ class CreateSecretSerializer(serializers.Serializer):
                 user_emails=attrs.get("shared_with"), user=self.context.get("user")
             ).validated_emails
         return attrs
+
+
+

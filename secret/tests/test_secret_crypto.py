@@ -1,15 +1,13 @@
 from django.test import TestCase
-from django.contrib.auth import get_user_model
 from secret.crypto.secret_crypto import SecretCrypto
+from user.querysets.user_queryset import UserQueryset
 from user.tests.dataset import user_valid_dataset
 from secret.models import Secret
 
 
 class SecretCryptoTests(TestCase):
     def setUp(self):
-        self.user = get_user_model().objects.create_user(
-            **user_valid_dataset[0], is_active=True
-        )
+        self.user = UserQueryset.create_user(**user_valid_dataset[1], is_active=True)
 
         self.secret = "This is a secret"
 

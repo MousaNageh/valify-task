@@ -1,11 +1,30 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_200_OK
+from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_200_OK, HTTP_201_CREATED
+from secret.serializers.share_secret_with_users_serializer import ShareSecretWithUsersSerializer
 from secret.serializers.shared_secret_serializer import SharedSecretSerializer
 from rest_framework.permissions import IsAuthenticated
 from secret.queryset.shared_secret_queryset import SharedSecretQueryset
 from secret.crypto.secret_crypto import SecretCrypto
+
+
+class ShareSecretWithUsersView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        serializer = ShareSecretWithUsersSerializer(
+            data=request.data, context={"user": request.user}
+        )
+        serializer.is_valid(raise_exception=True)
+        SharedSecretQueryset.create_shared_secrets(
+            secret=serializer.validated_data.get("secret"),
+            user_emails=serializer.validated_data.get("shared_with"),
+        )
+        return Response(
+            {"shared_with": serializer.validated_data.get("shared_with")},
+            status=HTTP_201_CREATED,
+        )
 
 
 class SharedSecretListAPI(ListAPIView):

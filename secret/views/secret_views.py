@@ -26,6 +26,9 @@ class SecretAPIView(CreateAPIView, ListAPIView):
             shared_with_emails=serializer.validated_data.get("shared_with"),
         )
         return Response(
-            {"secret": SecretCrypto.decrypt_secret(created_secret.secret)},
+            {
+                "id": created_secret.id,
+                "secret": SecretCrypto.decrypt_secret(created_secret.secret),
+            },
             status=HTTP_201_CREATED,
         )

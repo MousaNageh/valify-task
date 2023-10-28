@@ -5,6 +5,7 @@ from secret.crypto.secret_crypto import SecretCrypto
 
 class SharedSecretInline(admin.StackedInline):
     model = SharedSecret
+    readonly_fields = ["created_at"]
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -20,8 +21,8 @@ class SecretAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if obj:
-            return ["user", "secret", "original_secret"]
-        return []
+            return ["user", "secret", "original_secret", "created_at"]
+        return ["created_at"]
 
     @staticmethod
     def original_secret(secret):

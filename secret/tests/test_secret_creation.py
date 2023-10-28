@@ -1,22 +1,18 @@
-from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED
 from secret.tests.dataset import valid_secrets_string_dataset, not_exist_emails
+from user.querysets.user_queryset import UserQueryset
 from user.tests.dataset import user_valid_dataset
 
 
-class CreateSecretAuthorization(TestCase):
+class CreateSecret(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.url = reverse("secret-api")
-        self.user1 = get_user_model().objects.create(
-            **user_valid_dataset[0], is_active=True
-        )
-        self.user2 = get_user_model().objects.create(
-            **user_valid_dataset[1], is_active=True
-        )
+        self.user1 = UserQueryset.create_user(**user_valid_dataset[0], is_active=True)
+        self.user2 = UserQueryset.create_user(**user_valid_dataset[1], is_active=True)
         self.client.force_authenticate(user=self.user1)
 
     def test_create_secret_with_not_exist_emails(self):

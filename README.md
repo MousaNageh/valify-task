@@ -158,7 +158,7 @@ print(response.json())
 
 
 
-#### create secret API
+#### create secret with ability to share this secret API
 - endpoint `POST` : `{{base_url}}/api/secret/`
 - payload :
 ```json
@@ -170,7 +170,8 @@ print(response.json())
 - response sample :
 ```json
 {
-    "secret": "secret 1234"
+    "id": 1,
+    "secret": "secret 1"
 }
 ```
 - python code:
@@ -191,6 +192,7 @@ print(response.json())
 ```
 - notes :
   - this api requires authentication using access token as shown in python code
+  - `shared_with` can be empty list
   - `secret` must be at least 8 digits 
   - you can not share secrets with yourself (the same email of yours has logged in)
   - all emails in `shared_with` must be users
@@ -198,7 +200,7 @@ print(response.json())
 
 
 
-#### retrieve a list  secrets API
+#### retrieve a list secrets API
 - endpoint `GET` : `{{base_url}}/api/secret`
 - response sample :
 ```json
@@ -207,18 +209,19 @@ print(response.json())
     "next": null,
     "previous": null,
     "results": [
-        {
+        {   
+            "id": 1,
             "secret": "secret 1234",
             "shared_with": [
                 {
-                    "id": 4,
+                    "id": 1,
                     "user": {
                         "full_name": "mousa nageh",
                         "email": "test@test.com"
                     }
                 },
                 {
-                    "id": 8,
+                    "id": 2,
                     "user": {
                         "full_name": "Admin",
                         "email": "admin@admin.com"
@@ -242,6 +245,48 @@ print(response.json())
 - notes :
   - this api requires q authentication using access token as shown in python code  
   - data is paginated by 10
+
+
+
+
+####  share  secret with users API
+- endpoint `POST` : `{{base_url}}/api/secret/share-with`
+- payload :
+```json
+{
+    "secret_id": "<secret_id>",
+    "shared_with": ["<user_1_email>", "<user_2_email>",... ]
+}
+```
+- response sample :
+```json
+{
+    "shared_with": [
+        "email@email.com"
+    ]
+}
+```
+- python code:
+```python
+import requests
+token = "<access_token>"
+headers = {
+    "Authorization": f"Bearer {token}",
+}
+response = requests.post("{{base_url}}/api/secret/share-with",
+        data={
+          "secret": "<secret>",
+          "shared_with": ["<user_1_email>", "<user_2_email>",... ]
+        },
+        headers=headers
+)
+print(response.json())
+```
+- notes :
+  - this api requires authentication using access token as shown in python code
+  - `secret_id` must be exists and owned by user 
+  - you can not share secrets with yourself (the same email of yours has logged in)
+  - all emails in `shared_with` must be users
 
 
 
