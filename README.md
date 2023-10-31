@@ -173,7 +173,7 @@ print(response.json())
 ```json
 {
     "id": 1,
-    "secret": "secret 1"
+    "secret": "secret 1234"
 }
 ```
 - python code:
@@ -346,5 +346,5 @@ response = requests.get("{{base_url}}/api/secret/shared/<shared_secret_id>", hea
 print(response.json())
 ```
 - notes :
-  - this api requires q authentication using access token as shown in python code
+  - this api requires authentication using access token as shown in python code
   - `<shared_secret_id>` replaced with shared secret id retrieved from list of shared secrets. 
